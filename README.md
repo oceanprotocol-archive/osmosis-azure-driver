@@ -12,6 +12,7 @@
 ---
 ## Table of Contents
 
+  - [Quickstart](#quickstart)
   - [Code style](#code-style)
   - [Testing](#testing)
   - [New Version](#new-version)
