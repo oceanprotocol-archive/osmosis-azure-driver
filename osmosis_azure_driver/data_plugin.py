@@ -64,7 +64,7 @@ class Plugin(AbstractPlugin):
         return container_list
 
     def generate_url(self, remote_file):
-        parse_url = self._parse_url(remote_file)
+        parse_url = _parse_url(remote_file)
         key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, parse_url.account).keys[0].value
         bs = BlockBlobService(account_name=parse_url.account, account_key=key)
 
@@ -82,7 +82,7 @@ class Plugin(AbstractPlugin):
             self.logger.error("Source or destination must be a azure storage url (format "
                               "https://myaccount.blob.core.windows.net/mycontainer/myblob")
             raise OsmosisError
-        parse_url = self._parse_url(remote_file)
+        parse_url = _parse_url(remote_file)
         key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, parse_url.account).keys[0].value
         bs = BlockBlobService(account_name=parse_url.account, account_key=key)
         return bs.delete_blob(parse_url.container, parse_url.blob)
@@ -102,35 +102,26 @@ class Plugin(AbstractPlugin):
 
         # Check if source exists and can read
         if 'core.windows.net' in source_path:
-            parse_url = self._parse_url(source_path)
+            parse_url = _parse_url(source_path)
             key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, parse_url.account).keys[
                 0].value
             bs = BlockBlobService(account_name=parse_url.account, account_key=key)
             return bs.get_blob_to_path(parse_url.container, parse_url.blob, dest_path)
         else:
-            parse_url = self._parse_url(dest_path)
+            parse_url = _parse_url(dest_path)
             key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, parse_url.account).keys[
                 0].value
             bs = BlockBlobService(account_name=parse_url.account, account_key=key)
             return bs.create_blob_from_path(parse_url.container, parse_url.blob, source_path)
 
     def create_directory(self, remote_folder):
-        parse_url = self._parse_url(remote_folder)
+        parse_url = _parse_url(remote_folder)
         key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, parse_url.account).keys[0].value
         bs = BlockBlobService(account_name=parse_url.account, account_key=key)
         return bs.create_container(container_name=remote_folder)
 
     def retrieve_availability_proof(self):
         pass
-
-    def _parse_url(self, url):
-        account = url[8:].split('/')[0].split('.')[0]
-        container = url[8:].split('/')[1]
-        blob = url[8:].split('/')[2]
-        # if account != self.account:
-        #     self.logger.error('This url has a wrong account.')
-        #     raise OsmosisError
-        return azure_parameters(account, container, blob)
 
     def _get_azure_cli_credentials(self):
         credentials, subscription_id = get_azure_cli_credentials()
@@ -142,3 +133,14 @@ class Plugin(AbstractPlugin):
             'cloud_environment': cloud_environment
         }
         return cli_credentials
+
+
+def _parse_url(url):
+    account = url[8:].split('/')[0].split('.')[0]
+    container = url[8:].split('/')[1]
+    blob = url[8:].split('/')[2]
+    # if account != self.account:
+    #     self.logger.error('This url has a wrong account.')
+    #     raise OsmosisError
+
+    return azure_parameters(account, container, blob)

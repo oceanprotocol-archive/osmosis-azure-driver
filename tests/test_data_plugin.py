@@ -1,5 +1,5 @@
 from osmosis_driver_interface.osmosis import Osmosis
-from osmosis_azure_driver.data_plugin import Plugin
+from osmosis_azure_driver.data_plugin import _parse_url
 import os
 
 # osmo = Osmosis('./tests/osmosis.ini').data_plugin()
@@ -21,7 +21,7 @@ import os
 
 def test_split_url():
     url = 'https://testocnfiles.blob.core.windows.net/mycontainer/myblob'
-    parse_url = Plugin()._parse_url(url)
+    parse_url = _parse_url(url)
     assert parse_url.account == 'testocnfiles'
     assert parse_url.container == 'mycontainer'
     assert parse_url.blob == 'myblob'
