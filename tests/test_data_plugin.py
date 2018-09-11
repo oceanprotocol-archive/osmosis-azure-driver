@@ -2,11 +2,11 @@ from osmosis_driver_interface.osmosis import Osmosis
 from osmosis_azure_driver.data_plugin import _parse_url
 import os
 
-osmo = Osmosis('./tests/osmosis.ini').data_plugin()
-
-
-def test_copy_file():
-    assert osmo.type() == 'Azure'
+# osmo = Osmosis('./tests/osmosis.ini').data_plugin()
+#
+#
+# def test_copy_file():
+#     assert osmo.type() == 'Azure'
 
 # To run this test you need to login with your credentials through az login
 # def test_list():
