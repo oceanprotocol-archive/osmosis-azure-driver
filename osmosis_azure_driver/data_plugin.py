@@ -16,7 +16,7 @@ azure_parameters = namedtuple('Azure', ['account', 'container', 'blob'])
 
 class Plugin(AbstractPlugin):
 
-    def __init__(self, resource_group_name=None, config=None):
+    def __init__(self, config=None, resource_group_name=None):
         """Initialize a :class:`~.Plugin`.
         """
         self.logger = logging.getLogger('Plugin')
@@ -40,22 +40,31 @@ class Plugin(AbstractPlugin):
         return "Azure"
 
     def upload(self, local_file, remote_file):
-        """
-        :param local_file:
-        :param remote_file:
-        :return:
+        """Upload file to the cloud. The azure url format is https://myaccount.blob.core.windows.net/mycontainer/myblob.
+         Args:
+             local_file(str): The path of the file to be copied.
+             remote_file(str): The destination path where the file is going to be allocated.
+         Raises:
+             :exc:`~..OsmosisError`: if the file is not uploaded correctly.
         """
         return self.copy(local_file, remote_file)
 
     def download(self, remote_file, local_file):
-        """
-        :param remote_file:
-        :param local_file:
-        :return:
+        """Download file from the cloud. The azure url format is https://myaccount.blob.core.windows.net/mycontainer/myblob.
+         Args:
+             remote_file(str): The path of the file to be copied.
+             local_file(str): The destination path where the file is going to be allocated.
+         Raises:
+             :exc:`~..OsmosisError`: if the file is not downloaded correctly.
         """
         return self.copy(remote_file, local_file)
 
     def list(self, container, account=None):
+        """List the blobs inside a container.
+         Args:
+             container(str): Name of the container where we want to list the blobs.
+             account(str): The name of the storage account.
+        """
         key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, account).keys[0].value
         bs = BlockBlobService(account_name=account, account_key=key)
         container_list = []
@@ -64,6 +73,10 @@ class Plugin(AbstractPlugin):
         return container_list
 
     def generate_url(self, remote_file):
+        """Sign a remote file to distribute. The azure url format is https://myaccount.blob.core.windows.net/mycontainer/myblob.
+         Args:
+             remote_file(str): The blob that we want to sign.
+        """
         parse_url = _parse_url(remote_file)
         key = self.storage_client.storage_accounts.list_keys(self.resource_group_name, parse_url.account).keys[0].value
         bs = BlockBlobService(account_name=parse_url.account, account_key=key)
@@ -78,6 +91,12 @@ class Plugin(AbstractPlugin):
         return source_blob_url
 
     def delete(self, remote_file):
+        """Delete file from the cloud. The azure url format is https://myaccount.blob.core.windows.net/mycontainer/myblob.
+         Args:
+             remote_file(str): The path of the file to be deleted.
+         Raises:
+             :exc:`~..OsmosisError`: if the file is not uploaded correctly.
+        """
         if 'blob.core.windows.net' not in remote_file:
             self.logger.error("Source or destination must be a azure storage url (format "
                               "https://myaccount.blob.core.windows.net/mycontainer/myblob")
@@ -88,7 +107,7 @@ class Plugin(AbstractPlugin):
         return bs.delete_blob(parse_url.container, parse_url.blob)
 
     def copy(self, source_path, dest_path, account=None, group_name=None):
-        """Copy file from a path to another path.
+        """Copy file from a path to another path. The azure url format is https://myaccount.blob.core.windows.net/mycontainer/myblob.
          Args:
              source_path(str): The path of the file to be copied.
              dest_path(str): The destination path where the file is going to be allocated.
@@ -123,7 +142,8 @@ class Plugin(AbstractPlugin):
     def retrieve_availability_proof(self):
         pass
 
-    def _get_azure_cli_credentials(self):
+    @staticmethod
+    def _get_azure_cli_credentials():
         credentials, subscription_id = get_azure_cli_credentials()
         cloud_environment = get_cli_active_cloud()
 

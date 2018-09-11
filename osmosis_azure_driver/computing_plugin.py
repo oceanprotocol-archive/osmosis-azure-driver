@@ -1,7 +1,7 @@
 from osmosis_driver_interface.computing_plugin import AbstractPlugin
 
 
-class ComputingPlugin(AbstractPlugin):
+class Plugin(AbstractPlugin):
     def type(self):
         pass
 
