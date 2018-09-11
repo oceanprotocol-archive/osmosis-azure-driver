@@ -12,12 +12,25 @@
 ---
 ## Table of Contents
 
+  - [Quickstart](#quickstart)
   - [Code style](#code-style)
   - [Testing](#testing)
   - [New Version](#new-version)
   - [License](#license)
 
 ---
+
+## Quickstart
+
+When you start your application first time it would require that you do an `az login` to get your access token to your 
+Azure account. Once this step is done successfully you can start to use the plugin in the following way:
+
+```bash
+pl = Plugin(resource_group_name='OceanProtocol')
+``` 
+
+At the moment there is only a first implementation for the data_plugin, but in the future is going to be an instance 
+for the computing plugin as well.
 
 ## Code style
 
