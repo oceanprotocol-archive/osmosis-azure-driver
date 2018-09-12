@@ -1,4 +1,5 @@
 from osmosis_driver_interface.osmosis import Osmosis
+from osmosis_azure_driver.data_plugin import Plugin
 from osmosis_azure_driver.data_plugin import _parse_url
 import os
 
