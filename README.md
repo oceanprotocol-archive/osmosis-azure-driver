@@ -22,12 +22,20 @@
 
 ## Quickstart
 
-When you start your application first time it would require that you do an `az login` to get your access token to your 
-Azure account. Once this step is done successfully you can start to use the plugin in the following way:
-
+To login in Azure cloud you need to execute the driver with the next environment variables set:
 ```bash
-pl = Plugin(resource_group_name='OceanProtocol')
-``` 
+AZURE_CLIENT_ID
+AZURE_CLIENT_SECRET
+AZURE_TENANT_ID
+AZURE_SUBSCRIPTION_ID
+```
+
+To get information about how to create an App principal for Osmosis Azure driver in your Azure account, please
+refer to Azure documentation. Links:
+  - [#1](https://docs.microsoft.com/en-us/python/azure/python-sdk-azure-authenticate?view=azure-python)
+  - [#2](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli?toc=%2Fazure%2Fazure-resource-manager%2Ftoc.json&view=azure-cli-latest)
+  - [#3](https://docs.microsoft.com/en-us/azure/azure-resource-manager/resource-group-create-service-principal-portal)
+
 
 At the moment there is only a first implementation for the data_plugin, but in the future is going to be an instance 
 for the computing plugin as well.

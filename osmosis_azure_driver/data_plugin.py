@@ -7,7 +7,7 @@ from azure.storage.blob import BlockBlobService
 from azure.common.cloud import get_cli_active_cloud
 from azure.mgmt.storage import StorageManagementClient
 from azure.mgmt.resource import ResourceManagementClient
-from azure.common.credentials import get_azure_cli_credentials
+from azure.common.credentials import get_azure_cli_credentials, ServicePrincipalCredentials
 from osmosis_driver_interface.exceptions import OsmosisError
 from osmosis_driver_interface.data_plugin import AbstractPlugin
 
@@ -22,10 +22,9 @@ class Plugin(AbstractPlugin):
         self.logger = logging.getLogger('Plugin')
         logging.basicConfig(level=logging.INFO)
         try:
-            subscription_id = os.environ.get(
-                'AZURE_SUBSCRIPTION_ID',
-                self._get_azure_cli_credentials()['subscription_id'])
-            credentials = self._get_azure_cli_credentials()['credentials']
+
+            subscription_id = os.environ.get('AZURE_SUBSCRIPTION_ID')
+            credentials = self._login_azure_app_token()
             # Create a Resource Management client
             self.resource_client = ResourceManagementClient(credentials, subscription_id)
             self.storage_client = StorageManagementClient(credentials, subscription_id)
@@ -34,6 +33,31 @@ class Plugin(AbstractPlugin):
             raise OsmosisError
 
         self.resource_group_name = resource_group_name  # OceanProtocol
+
+    @staticmethod
+    def _login_azure_app_token(client_id=None, client_secret=None, tenant_id=None):
+        """
+        Authenticate APP using token credentials:
+        https://docs.microsoft.com/en-us/python/azure/python-sdk-azure-authenticate?view=azure-python
+        :return: ~ServicePrincipalCredentials credentials
+        """
+        client_id = os.getenv('AZURE_CLIENT_ID') if not client_id else client_id
+        client_secret = os.getenv('AZURE_CLIENT_SECRET') if not client_secret else client_secret
+        tenant_id = os.getenv('AZURE_TENANT_ID') if not tenant_id else tenant_id
+        credentials = ServicePrincipalCredentials(
+            client_id=client_id,
+            secret=client_secret,
+            tenant=tenant_id,
+        )
+        return credentials
+
+    def _login_azure_cli(self):
+        """
+        Authenticate APP using az cli interactive login:
+        https://docs.microsoft.com/en-us/python/azure/python-sdk-azure-authenticate?view=azure-python
+        :return: credentials
+        """
+        return self._get_azure_cli_credentials()['credentials']
 
     def type(self):
         """str: the type of this plugin (``'Azure'``)"""
