@@ -14,7 +14,7 @@ def test_copy_file():
 def test_list():
     pl = Plugin(resource_group_name='OceanProtocol')
     pl.upload('./LICENSE', 'https://testocnfiles.blob.core.windows.net/ocn-hackaton/license_copy')
-    pl.download('https://testocnfiles.blob.core.windows.net/ocn-hackaton/license', 'license_copy')
+    pl.download('https://testocnfiles.blob.core.windows.net/ocn-hackaton/license_copy', 'license_copy')
     assert open('license_copy').read() == open('./LICENSE').read()
     print(pl.list('ocn-hackaton','testocnfiles'))
     pl.delete('https://testocnfiles.blob.core.windows.net/ocn-hackaton/license_copy')
