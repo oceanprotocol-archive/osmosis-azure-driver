@@ -121,7 +121,8 @@ class Plugin(AbstractPlugin):
                                                                  permission=BlobPermissions.READ,
                                                                  expiry=datetime.utcnow() + timedelta(hours=24),
                                                                  )
-            source_blob_url = bs.make_blob_url(parse_url.path, parse_url.file,
+            source_blob_url = bs.make_blob_url(container_name=parse_url.container_or_share_name,
+                                               blob_name=parse_url.file,
                                                sas_token=sas_token)
             return source_blob_url
         elif parse_url.file_type == 'file':
