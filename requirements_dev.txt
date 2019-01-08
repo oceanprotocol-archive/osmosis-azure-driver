@@ -172,7 +172,7 @@ pytest==3.7.4
 pytest-runner==4.2
 python-dateutil==2.7.3
 pytz==2018.5
-PyYAML==3.13
+PyYAML>=4.2b1
 requests==2.20.1
 requests-oauthlib==1.0.0
 scp==0.11.0
