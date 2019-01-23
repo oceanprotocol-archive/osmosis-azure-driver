@@ -1,16 +1,18 @@
-from osmosis_driver_interface.computing_plugin import AbstractPlugin
-from azure.common.cloud import get_cli_active_cloud
-from azure.mgmt.containerinstance import ContainerInstanceManagementClient
-from azure.mgmt.containerinstance.models import (ContainerGroup, Container, ResourceRequirements, ResourceRequests,
-                                                 OperatingSystemTypes, Volume, VolumeMount, AzureFileVolume,
-                                                 ContainerGroupRestartPolicy)
-from azure.common.credentials import get_azure_cli_credentials, ServicePrincipalCredentials
-from azure.mgmt.resource import ResourceManagementClient
 import logging
 import os
 import time
+
+from azure.common.cloud import get_cli_active_cloud
+from azure.common.credentials import get_azure_cli_credentials, ServicePrincipalCredentials
+from azure.mgmt.containerinstance import ContainerInstanceManagementClient
+from azure.mgmt.containerinstance.models import (ContainerGroup, Container, ResourceRequirements,
+                                                 ResourceRequests,
+                                                 OperatingSystemTypes, Volume, VolumeMount,
+                                                 AzureFileVolume,
+                                                 ContainerGroupRestartPolicy)
+from azure.mgmt.resource import ResourceManagementClient
+from osmosis_driver_interface.computing_plugin import AbstractPlugin
 from osmosis_driver_interface.exceptions import OsmosisError
-from osmosis_driver_interface.utils import parse_config
 
 
 class Plugin(AbstractPlugin):
