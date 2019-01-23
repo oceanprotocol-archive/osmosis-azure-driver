@@ -1,11 +1,12 @@
-from osmosis_driver_interface.osmosis import Osmosis
+from osmosis_azure_driver.data_plugin import Plugin as DataPlugin
+from osmosis_azure_driver.computing_plugin import Plugin as ComputingPlugin
 from osmosis_driver_interface.utils import parse_config
 
 
 def test_compute_on_cloud():
     config = parse_config("./tests/osmosis.ini")
-    osm_data = Osmosis(file_path='./tests/osmosis.ini').data_plugin
-    osm_computing = Osmosis(file_path='./tests/osmosis.ini').computing_plugin
+    osm_data = DataPlugin('./tests/osmosis.ini')
+    osm_computing = ComputingPlugin('./tests/osmosis.ini')
     elements_before_compute = len(osm_data.list(config.get('azure.share.output'),
                                                 False,
                                                 config.get('azure.account.name')))
