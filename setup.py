@@ -14,7 +14,8 @@ with open('HISTORY.md') as history_file:
 # Installed by pip install osmosis-azure-driver
 # or pip install -e .
 install_requirements = [
-    # Install squid-py and all its dependencies first
+    'coloredlogs',
+    'azure==4.0.0',
     'osmosis-driver-interface==0.0.6',
 ]
 
