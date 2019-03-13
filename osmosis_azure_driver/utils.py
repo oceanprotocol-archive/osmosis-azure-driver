@@ -1,3 +1,6 @@
+#  Copyright 2018 Ocean Protocol Foundation
+#  SPDX-License-Identifier: Apache-2.0
+
 from collections import namedtuple
 
 azure_parameters = namedtuple('Azure', ['account', 'file_type', 'container_or_share_name', 'path', 'file'])
