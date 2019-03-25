@@ -59,3 +59,5 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 ```
+
+Note: Installing this package (osmosis-azure-driver) installs the azure package which has an MIT license. Installing the azure package installs the certifi package which has an MPL-2.0 license. The certifi source code can be found at https://github.com/certifi/python-certifi . Installing the azure package also installs the chardet package which might have licensing that is incompatible with the MIT license (and the Apache-2.0 license). We have opened [an issue](https://github.com/Azure/azure-sdk-for-python/issues/4671) on the azure-sdk-for-python repository to let them know about the potential licensing conflict and to resolve it if necessary.
