@@ -19,7 +19,7 @@ with open('CHANGELOG.md') as history_file:
 install_requirements = [
     'coloredlogs',
     'azure==4.0.0',
-    'osmosis-driver-interface==0.0.6',
+    'osmosis-driver-interface>=0.1.0',
 ]
 
 # Required to run setup.py:
