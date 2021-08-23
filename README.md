@@ -5,7 +5,6 @@
 > 💧 Osmosis Azure Driver Implementation
 > [oceanprotocol.com](https://oceanprotocol.com)
 
-[![Build Status](https://travis-ci.com/oceanprotocol/osmosis-azure-driver.svg)](https://travis-ci.com/oceanprotocol/osmosis-azure-driver)
 [![PyPI](https://img.shields.io/pypi/v/osmosis-azure-driver.svg)](https://pypi.org/project/osmosis-azure-driver/)
 [![GitHub contributors](https://img.shields.io/github/contributors/oceanprotocol/osmosis-azure-driver.svg)](https://github.com/oceanprotocol/osmosis-azure-driver/graphs/contributors)
 
@@ -23,10 +22,10 @@
 
 ## Setup
 
-To use Azure Storage with Brizo, you must set up some Azure Storage and then tell Brizo about your Azure Storage account by setting some Brizo configuration settings (either in a Brizo config file or in some environment variables). For details, see:
+To use Azure Storage with Ocean Provider, you must set up some Azure Storage and then tell Provider about your Azure Storage account by setting some Provider configuration settings (either in a Provider config file or in some environment variables). For details, see:
 
-- [the README.md file in the Brizo repository](https://github.com/oceanprotocol/brizo/blob/develop/README.md) and
-- [the tutorial about how to set up Azure Storage for use with Ocean Protocol](https://docs.oceanprotocol.com/tutorials/azure-for-brizo/)
+- [the README.md file in the Provider repository](https://github.com/oceanprotocol/provider) and
+- [the tutorial about how to set up Azure Storage for use with Ocean](https://docs.oceanprotocol.com/tutorials/azure-for-provider/)
 
 ## Code Style
 
